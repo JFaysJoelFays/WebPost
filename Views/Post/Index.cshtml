@@ -1,0 +1,14 @@
+﻿@model IList<WebPost.Models.Post>
+
+@{
+    ViewBag.Title = "Posts";
+}
+
+<h2>Posts</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.DisplayForModel()
+
