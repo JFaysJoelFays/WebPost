@@ -20,30 +20,33 @@
             return false;
         });
 
-        loadmore = function () {
+        loadMore = function () {
             var loadedComments = $(this).data("loadedcomments");
             $.post(
                 '@Url.Action("CommentList")',
                 { postId: '@Model.PostId', skip: loadedComments , limit: 5, totalComments: @ViewBag.TotalComments },
                 function (response) {
                     $("#comment-list").find("#load-more").parent().replaceWith($(response).fadeIn(1000));
-                    $("#load-more").on("click", loadmore);
+                    $("#load-more").on("click", loadMore);
                 }
             );
         }
 
-        $("#load-more").on("click", loadmore);
+        $("#load-more").on("click", loadMore);
 
-        $(".remove-comment").on("click", function () {
+        removeComment = function () {
             var comment = $(this).parent();
             $.post(
                 '@Url.Action("RemoveComment")',
                 { postId: '@Model.PostId', commentId: $(this).data("id") },
                 function () {
                     comment.fadeOut(1000, function() { $(this).remove(); });
+                    $(".remove-comment").on("click", removeComment);
                 }
             );
-        });
+        };
+
+        $(".remove-comment").on("click", removeComment);
     });
 </script>
 
